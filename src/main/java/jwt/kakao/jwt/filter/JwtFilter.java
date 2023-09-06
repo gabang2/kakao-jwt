@@ -31,7 +31,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String path = request.getServletPath();
         // 로그인일 경우 건너뛰기
         if (
-                path.startsWith("/api/oauth/kakao")
+                path.startsWith("/")
         ) {
             filterChain.doFilter(request, response);
             return;
