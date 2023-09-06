@@ -22,10 +22,11 @@ public class JwtService {
         member.setRefreshToken(refreshToken);
         memberService.patchMember(member);
 
-        return JwtProvider.createAccessToken(member.getId(), secretKey);
+        return "Bearer " + JwtProvider.createAccessToken(member.getId(), secretKey);
     }
 
     public Member getMemberFromAccessToken(String accessToken) {
+        accessToken = accessToken.split(" ")[2];
         Long userId = JwtProvider.getUserId(accessToken, secretKey);
         return memberService.verifiedMember(userId);
     }

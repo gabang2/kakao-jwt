@@ -49,7 +49,7 @@ public class OauthController {
 
     @GetMapping("/getMember")
     public ResponseEntity returnMemberDetail(@RequestHeader("Authorization") String accessToken) {
-        Member member = jwtService.getMemberFromAccessToken(accessToken.split(" ")[1]);
+        Member member = jwtService.getMemberFromAccessToken(accessToken);
         MemberResponseDto.Response response = memberMapper.memberToMemberResponseDto(member);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
