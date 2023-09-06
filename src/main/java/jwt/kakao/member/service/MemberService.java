@@ -7,6 +7,7 @@ import jwt.kakao.member.repository.MemberRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
@@ -23,6 +24,20 @@ public class MemberService {
     public Member findMember(long memberPk) {
         Member member = verifiedMember(memberPk);
         return member;
+    }
+
+    public Member findMemberByKakaoId(long kakaoId) {
+        Optional<Member> member = memberRespository.findMemberByKakaoId(kakaoId);
+        if (member.isPresent()) {
+            return member.get();
+        } else {
+            Member newMember = new Member();
+            newMember.setKakaoId(kakaoId);
+            newMember.setLevel(1);
+            newMember.setBadge("새싹지킴이");
+            newMember.setChallengeCnt(0);
+            return createMember(newMember);
+        }
     }
 
     // UPDATE

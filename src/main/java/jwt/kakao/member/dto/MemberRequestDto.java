@@ -23,6 +23,8 @@ public class MemberRequestDto {
         private String badge;
 
         private int challengeCnt;
+        private String refreshToken;
+
     }
 
     @AllArgsConstructor
@@ -40,5 +42,7 @@ public class MemberRequestDto {
         private String badge;
 
         private int challengeCnt;
+        private String refreshToken;
+
     }
 }

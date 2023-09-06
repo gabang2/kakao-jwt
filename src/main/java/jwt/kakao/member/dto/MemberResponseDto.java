@@ -2,14 +2,17 @@ package jwt.kakao.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class MemberResponseDto {
     @AllArgsConstructor
+    @NoArgsConstructor
     @Setter
     @Getter
     public static class Response {
@@ -24,5 +27,7 @@ public class MemberResponseDto {
         private String badge;
 
         private int challengeCnt;
+        private String refreshToken;
+
     }
 }
