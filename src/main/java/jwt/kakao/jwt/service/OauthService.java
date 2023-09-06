@@ -1,9 +1,8 @@
-package jwt.kakao.oauth.service;
+package jwt.kakao.jwt.service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import jwt.kakao.oauth.dto.KakaoUserInfo;
+import jwt.kakao.jwt.dto.KakaoUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

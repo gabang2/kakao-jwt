@@ -1,4 +1,4 @@
-package jwt.kakao.oauth.dto;
+package jwt.kakao.jwt.dto;
 
 import lombok.*;
 
