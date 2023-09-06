@@ -29,10 +29,9 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getServletPath();
-
         // 로그인일 경우 건너뛰기
         if (
-                path.startsWith("로그인 요청 API")
+                path.startsWith("/login")
         ) {
             filterChain.doFilter(request, response);
             return;
@@ -47,7 +46,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // Token 꺼내기
         String token = authorization.split(" ")[1];
-
         // Token Expired 되었는지 여부
         if (JwtProvider.isExpired(token, secretKey)) {
             filterChain.doFilter(request, response);

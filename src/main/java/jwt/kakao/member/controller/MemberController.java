@@ -1,5 +1,7 @@
 package jwt.kakao.member.controller;
 
+import jwt.kakao.jwt.provider.JwtProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,8 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     @ResponseBody
-    @GetMapping("/test")
+    @GetMapping("/api/test")
     public String test() {
-        return "test";
+        String response = "test 성공";
+        return response;
+    }
+
+    @ResponseBody
+    @GetMapping("/login")
+    public String create() {
+        String response = JwtProvider.createAccessToken(1L, "dslkfjlksdafmlksjdalkjfklsdf655645");
+        return response;
     }
 }
