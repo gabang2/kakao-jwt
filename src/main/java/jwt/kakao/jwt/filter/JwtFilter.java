@@ -1,6 +1,8 @@
 package jwt.kakao.jwt.filter;
 
 import io.jsonwebtoken.JwtException;
+import jwt.kakao.exception.BusinessLogicException;
+import jwt.kakao.exception.ExceptionCode;
 import jwt.kakao.jwt.provider.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +33,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String path = request.getServletPath();
         // 로그인일 경우 건너뛰기
         if (
-                path.startsWith("/")
+                path.startsWith("/api/oauth/kakao")
         ) {
             filterChain.doFilter(request, response);
             return;
@@ -41,7 +43,7 @@ public class JwtFilter extends OncePerRequestFilter {
         log.info("authorization : {}", authorization);
 
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            throw new RuntimeException(); // TODO : AuthenticationException으로 추후 처리해야함
+            throw new BusinessLogicException(ExceptionCode.AUTHORIZATION_HEADER_NOT_FOUND);
         }
 
         // Token 꺼내기
@@ -61,7 +63,7 @@ public class JwtFilter extends OncePerRequestFilter {
         // 리프레쉬 토큰이 유효한지와 path 정보를 통해 확인이 끝났기 때문에 컨트롤러에서는 바로 토큰 재발행해주고 보내주면 됨
         if (
                 !(
-                        (path.startsWith("토큰 재발행 API") && JwtProvider.isRefreshToken(token, secretKey))
+                        (path.startsWith("/api/oauth/kakao") && JwtProvider.isRefreshToken(token, secretKey))
                                 || JwtProvider.isAccessToken(token, secretKey)
                 )
         ) {

@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -32,7 +33,7 @@ public class OauthController {
     private final MemberMapper memberMapper;
 
     @GetMapping("/oauth/kakao")
-    public String kakaoCallback(@RequestParam String code) {
+    public ResponseEntity kakaoCallback(@RequestParam String code) {
 
         // 유저 정보 얻기
         String kakaoAccessToken = oauthService.getKakaoAccessToken(code);
@@ -41,7 +42,9 @@ public class OauthController {
         // 해당 kakao ID를 가진 Member 반환
         Member member = memberService.findMemberByKakaoId(kakaoUserInfo.getId());
 
-        return jwtService.getAccessToken(member);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Authorization", jwtService.getAccessToken(member));
+        return new ResponseEntity<>(jwtService.getAccessToken(member), responseHeaders, HttpStatus.CREATED);
     }
 
     @GetMapping("/getMember")

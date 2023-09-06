@@ -5,7 +5,8 @@ import lombok.Getter;
 import java.util.Arrays;
 
 public enum ExceptionCode {
-    MEMBER_NOT_FOUND(404, "Member not found");
+    MEMBER_NOT_FOUND(404, "Member not found"),
+    AUTHORIZATION_HEADER_NOT_FOUND(400, "Authorization Header Bad Request");
 
 
     @Getter
