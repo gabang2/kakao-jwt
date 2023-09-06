@@ -8,10 +8,9 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+@NoArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

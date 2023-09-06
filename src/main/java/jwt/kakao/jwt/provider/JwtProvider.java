@@ -4,17 +4,22 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Date;
 
 @Slf4j
+@RequiredArgsConstructor
 public class JwtProvider {
 
     private static final Long accessTokenValidTime = Duration.ofMinutes(30).toMillis(); // 만료시간 30분
     private static final Long refreshTokenValidTime = Duration.ofDays(14).toMillis(); // 만료시간 2주
+
 
     // 회원 정보 조회
     public static Long getUserId(String token, String secretKey) {

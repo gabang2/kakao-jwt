@@ -46,6 +46,7 @@ public class MemberService {
         Optional.ofNullable(member.getKakaoId()).ifPresent(findMember::setKakaoId);
         Optional.ofNullable(member.getNickname()).ifPresent(findMember::setNickname);
         Optional.ofNullable(member.getBadge()).ifPresent(findMember::setBadge);
+        Optional.ofNullable(member.getRefreshToken()).ifPresent(findMember::setRefreshToken);
 
         return memberRespository.save(findMember);
     }
