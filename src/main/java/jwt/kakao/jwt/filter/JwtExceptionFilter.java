@@ -2,6 +2,8 @@ package jwt.kakao.jwt.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.JwtException;
+import jwt.kakao.exception.BusinessLogicException;
+import jwt.kakao.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -29,11 +31,9 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (JwtException e) {
-            log.error("[-] Invalid Token");
-
+            throw new BusinessLogicException(ExceptionCode.TOKEN_NOT_VALID);
         } catch (AuthenticationException e) {
-            log.error("Authentication Exception");
-
+            throw new BusinessLogicException(ExceptionCode.TOKEN_NOT_VALID);
         }
     }
 

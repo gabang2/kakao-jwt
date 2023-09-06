@@ -27,6 +27,6 @@ public class JwtService {
 
     public Member getMemberFromAccessToken(String accessToken) {
         Long userId = JwtProvider.getUserId(accessToken, secretKey);
-        return memberService.findMember(userId);
+        return memberService.verifiedMember(userId);
     }
 }

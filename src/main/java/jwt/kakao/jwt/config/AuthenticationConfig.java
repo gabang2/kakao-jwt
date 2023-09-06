@@ -1,6 +1,8 @@
 package jwt.kakao.jwt.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jwt.kakao.jwt.filter.JwtExceptionFilter;
+import jwt.kakao.jwt.filter.JwtFilter;
 import jwt.kakao.jwt.service.OauthService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -29,11 +32,11 @@ public class AuthenticationConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 사용하는 경우 사용
                 .and()
-                //.authorizeRequests(authorize -> authorize.antMatchers("/api/oauth/kakao").permitAll())
-                .authorizeRequests(authorize -> authorize.anyRequest().permitAll())
-                //.authorizeRequests(authorize -> authorize.anyRequest().authenticated())
-//                .addFilterBefore(new JwtFilter(secretKey), UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(new JwtExceptionFilter(objectMapper), JwtFilter.class)
+                .authorizeRequests(authorize -> authorize.antMatchers("/api/oauth/kakao/**").permitAll())
+                //.authorizeRequests(authorize -> authorize.anyRequest().permitAll())
+                .authorizeRequests(authorize -> authorize.anyRequest().authenticated())
+                .addFilterBefore(new JwtFilter(secretKey), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtExceptionFilter(objectMapper), JwtFilter.class)
                 .build()
                 ;
     }
